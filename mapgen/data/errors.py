@@ -1,0 +1,2 @@
+class UnknownLayerResolverException(Exception):
+    pass

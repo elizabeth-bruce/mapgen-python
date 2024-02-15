@@ -1,0 +1,9 @@
+{
+    "name": "test_map",
+    "width": 10,
+    "height" 10,
+    "layers": [{
+        "name": "bottom_layer",
+	"layer_type": "test_resolver"
+    }]
+}

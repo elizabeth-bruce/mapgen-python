@@ -1,0 +1,5 @@
+from mapgen.data.layer_resolvers.layer_resolver import LayerResolver
+from mapgen.data.layer_resolvers.test_layer_resolver import TestLayerResolver
+
+LayerResolver
+TestLayerResolver
