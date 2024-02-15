@@ -12,7 +12,7 @@ class LayerConfiguration:
 
 @dataclass
 class MapConfiguration:
+    name: str
     width: int
     height: int
-    name: str
     layer_configurations: List[LayerConfiguration]

@@ -5,8 +5,6 @@ import pytest
 from mapgen.data.models import LayerConfiguration
 from mapgen.data.layer_resolvers.test_layer_resolver import TestLayerResolver
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-
 @pytest.fixture
 def test_layer_configuration():
     return LayerConfiguration(
