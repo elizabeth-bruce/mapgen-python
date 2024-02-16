@@ -4,7 +4,7 @@ from mapgen.data.models import LayerConfiguration
 from mapgen.data.layer_resolvers.layer_resolver import LayerResolver
 
 
-class TestLayerResolver(LayerResolver):
+class NativeLayerResolver(LayerResolver):
     @staticmethod
     async def resolver_fn(
         x: int, y: int, accessor: TileAttributeAccessor
@@ -12,6 +12,8 @@ class TestLayerResolver(LayerResolver):
         return x + y
 
     def resolve(self, layer_configuration: LayerConfiguration) -> Layer:
-        layer = Layer(layer_configuration.name, TestLayerResolver.resolver_fn)
+        layer = Layer(
+            layer_configuration.name, NativeLayerResolver.resolver_fn
+        )
 
         return layer

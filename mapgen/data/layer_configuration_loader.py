@@ -3,12 +3,17 @@ from typing import Dict, Type
 from mapgen.models import Layer
 from mapgen.data.models import LayerConfiguration
 from mapgen.data.errors import UnknownLayerResolverException
-from mapgen.data.layer_resolvers import LayerResolver, TestLayerResolver
+from mapgen.data.layer_resolvers import (
+    LayerResolver,
+    NativeLayerResolver,
+    TestLayerResolver,
+)
 
 
 class LayerConfigurationLoader:
     layer_resolver_type_map: Dict[str, Type[LayerResolver]] = {
-        "test_resolver": TestLayerResolver
+        "test_resolver": TestLayerResolver,
+        "native_resolver": NativeLayerResolver,
     }
 
     def load(self, layer_configuration: LayerConfiguration) -> Layer:

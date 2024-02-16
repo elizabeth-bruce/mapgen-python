@@ -1,6 +1,6 @@
 #!/bin/bash
 
-black -l80 mapgen/ &&
+black -l79 mapgen/ &&
 flake8 mapgen/ &&
 mypy mapgen/ &&
 pytest test/

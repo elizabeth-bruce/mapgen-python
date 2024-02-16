@@ -3,7 +3,12 @@ from typing import Any, Awaitable, Callable, Dict, List, Tuple
 from dataclasses import dataclass
 
 
-type LayerFn = Callable[[int, int], Awaitable[Any]]  # type: ignore
+type TileAttributeAccessor = Callable[  # type: ignore
+    [int, int, str], Awaitable[Any]
+]  # type: ignore
+type LayerFn = Callable[  # type: ignore
+    [int, int, TileAttributeAccessor], Awaitable[Any]
+]  # type: ignore
 
 
 @dataclass
