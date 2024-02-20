@@ -1,11 +1,13 @@
-from mapgen.models import MapDefinition, Map, Tile, TileSet
+from mapgen.models import MapDefinition, Map, TileSet
 
 
 class MapGenerator:
+    def __init__(self):
+        self.priority_tile_attributes = []
+        self.current_tile_layer_coordinate = None
+
     def generate_tiles(self, map_definition: MapDefinition) -> TileSet:
-        layer = map_definition.layers[0]
-        mock_tile = Tile(0, 0, layer, "test")
-        mock_tileset = {(0, 0, "foo"): mock_tile}
+        mock_tileset = {(0, 0, "foo"): "test"}
 
         return mock_tileset
 

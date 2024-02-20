@@ -1,7 +1,7 @@
 import pytest
 
 from mapgen.use_cases.map_generator import MapGenerator
-from mapgen.models import Layer, Map, MapDefinition, Tile
+from mapgen.models import Layer, Map, MapDefinition
 
 @pytest.fixture
 def map_definition():
@@ -28,11 +28,7 @@ def test_generate_map(map_definition, map_generator):
     expected_map = Map(
         map_definition = map_definition,
         tiles = {
-            (0, 0, "foo"): Tile(
-                0, 0,
-                map_definition.layers[0],
-               'test'
-            )
+            (0, 0, "foo"): 'test'
         }
     )
 

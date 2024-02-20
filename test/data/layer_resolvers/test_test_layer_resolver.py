@@ -18,7 +18,7 @@ def test_layer_resolver():
 
 @pytest.fixture
 def test_tile_attribute_accessor():
-    async def accessor(x, y, layer):
+    async def accessor(tile_layer_coordinate):
         return None
 
 @pytest.fixture

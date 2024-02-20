@@ -2,9 +2,11 @@ from typing import Any, Awaitable, Callable, Dict, List, Tuple
 
 from dataclasses import dataclass
 
+type TileCoordinate = Tuple[int, int]  # type: ignore
+type TileLayerCoordinate = Tuple[int, int, str]  # type: ignore
 
 type TileAttributeAccessor = Callable[  # type: ignore
-    [int, int, str], Awaitable[Any]
+    TileLayerCoordinate, Awaitable[Any]
 ]  # type: ignore
 type LayerFn = Callable[  # type: ignore
     [int, int, TileAttributeAccessor], Awaitable[Any]
@@ -17,15 +19,7 @@ class Layer:
     fn: LayerFn
 
 
-@dataclass
-class Tile:
-    x: int
-    y: int
-    layer: Layer
-    val: Any
-
-
-type TileSet = Dict[Tuple[int, int, str], Any]  # type: ignore
+type TileSet = Dict[TileLayerCoordinate, Any]  # type: ignore
 
 
 @dataclass
