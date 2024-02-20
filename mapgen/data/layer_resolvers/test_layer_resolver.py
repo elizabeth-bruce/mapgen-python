@@ -1,6 +1,6 @@
 from mapgen.models import Layer, TileAttributeAccessor
 
-from mapgen.data.models import LayerConfiguration
+from mapgen.data.models import LayerConfiguration, MapContext
 from mapgen.data.layer_resolvers.layer_resolver import LayerResolver
 
 
@@ -11,7 +11,9 @@ class TestLayerResolver(LayerResolver):
     ) -> int:
         return x + y
 
-    def resolve(self, layer_configuration: LayerConfiguration) -> Layer:
+    def resolve(
+        self, layer_configuration: LayerConfiguration, map_context: MapContext
+    ) -> Layer:
         layer = Layer(layer_configuration.name, TestLayerResolver.resolver_fn)
 
         return layer

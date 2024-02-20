@@ -3,7 +3,7 @@ import os
 import pytest
 
 from mapgen.data.errors import UnknownLayerResolverException
-from mapgen.data.models import LayerConfiguration
+from mapgen.data.models import LayerConfiguration, MapContext
 from mapgen.data.layer_configuration_loader import LayerConfigurationLoader
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -31,9 +31,13 @@ def test_tile_attribute_accessor():
     async def accessor(x, y, layer):
         return None
 
+@pytest.fixture
+def test_map_context():
+    return MapContext(f"{ROOT_DIR}/test/resources/data")
+
 @pytest.mark.asyncio
-async def test_layer_configuration_loader_test_resolver(test_layer_configuration, test_layer_configuration_loader, test_tile_attribute_accessor):
-    layer = test_layer_configuration_loader.load(test_layer_configuration)
+async def test_layer_configuration_loader_test_resolver(test_layer_configuration, test_map_context, test_layer_configuration_loader, test_tile_attribute_accessor):
+    layer = test_layer_configuration_loader.load(test_layer_configuration, test_map_context)
 
     assert layer.name == 'test_layer'
 
@@ -42,7 +46,7 @@ async def test_layer_configuration_loader_test_resolver(test_layer_configuration
     assert await fn(0, 1, test_tile_attribute_accessor) == 1
     assert await fn(5, 15, test_tile_attribute_accessor) == 20
 
-def test_layer_configuration_loader_unknown_layer_type(test_layer_configuration_unknown_layer_type, test_layer_configuration_loader):
+def test_layer_configuration_loader_unknown_layer_type(test_layer_configuration_unknown_layer_type, test_map_context, test_layer_configuration_loader):
     with pytest.raises(UnknownLayerResolverException) as exc:
-        test_layer_configuration_loader.load(test_layer_configuration_unknown_layer_type)
+        test_layer_configuration_loader.load(test_layer_configuration_unknown_layer_type, test_map_context)
 

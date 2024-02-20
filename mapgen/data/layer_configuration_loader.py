@@ -1,7 +1,7 @@
 from typing import Dict, Type
 
 from mapgen.models import Layer
-from mapgen.data.models import LayerConfiguration
+from mapgen.data.models import LayerConfiguration, MapContext
 from mapgen.data.errors import UnknownLayerResolverException
 from mapgen.data.layer_resolvers import (
     LayerResolver,
@@ -16,7 +16,9 @@ class LayerConfigurationLoader:
         "native_resolver": NativeLayerResolver,
     }
 
-    def load(self, layer_configuration: LayerConfiguration) -> Layer:
+    def load(
+        self, layer_configuration: LayerConfiguration, map_context: MapContext
+    ) -> Layer:
         resolver_type = layer_configuration.layer_type
         resolver_class = LayerConfigurationLoader.layer_resolver_type_map.get(
             resolver_type, None
@@ -29,6 +31,6 @@ class LayerConfigurationLoader:
 
         resolver = resolver_class()
 
-        layer = resolver.resolve(layer_configuration)
+        layer = resolver.resolve(layer_configuration, map_context)
 
         return layer
