@@ -3,10 +3,10 @@ from typing import Any, Awaitable, Callable, Dict, List, Tuple
 from dataclasses import dataclass
 
 type TileCoordinate = Tuple[int, int]  # type: ignore
-type TileLayerCoordinate = Tuple[int, int, str]  # type: ignore
+type MapCoordinate = Tuple[int, int, str]  # type: ignore
 
 type TileAttributeAccessor = Callable[  # type: ignore
-    TileLayerCoordinate, Awaitable[Any]
+    MapCoordinate, Awaitable[Any]
 ]  # type: ignore
 type LayerFn = Callable[  # type: ignore
     [int, int, TileAttributeAccessor], Awaitable[Any]
@@ -19,7 +19,7 @@ class Layer:
     fn: LayerFn
 
 
-type TileSet = Dict[TileLayerCoordinate, Any]  # type: ignore
+type MapCoordinateSet = Dict[MapCoordinate, Any]  # type: ignore
 
 
 @dataclass
@@ -33,4 +33,4 @@ class MapDefinition:
 @dataclass
 class Map:
     map_definition: MapDefinition
-    tiles: TileSet
+    map_coordinates: MapCoordinateSet

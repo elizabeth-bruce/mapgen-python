@@ -1,7 +1,7 @@
 import importlib.util
 import os
 
-# import sys
+from async_lru import alru_cache
 
 from mapgen.models import Layer
 from mapgen.data.models import LayerConfiguration, MapContext
@@ -39,7 +39,8 @@ class NativeLayerResolver(LayerResolver):
         spec.loader.exec_module(module)
 
         resolver_fn = getattr(module, layer_configuration.name)
+        cached_fn = alru_cache(resolver_fn)
 
-        layer = Layer(layer_configuration.name, resolver_fn)
+        layer = Layer(layer_configuration.name, cached_fn)
 
         return layer

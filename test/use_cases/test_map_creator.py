@@ -1,6 +1,6 @@
 import pytest
 
-from mapgen.use_cases.map_generator import MapGenerator
+from mapgen.use_cases.map_creator import MapCreator
 from mapgen.models import Layer, Map, MapDefinition
 
 @pytest.fixture
@@ -21,18 +21,18 @@ def map_definition():
     )
 
 @pytest.fixture
-def map_generator():
-    return MapGenerator()
+def map_creator():
+    return MapCreator()
 
-def test_generate_map(map_definition, map_generator):
+def test_generate_map(map_definition, map_creator):
     expected_map = Map(
         map_definition = map_definition,
-        tiles = {
+        map_coordinates = {
             (0, 0, "foo"): 'test'
         }
     )
 
 
-    actual_map = map_generator.generate_map(map_definition)
+    actual_map = map_creator.create_map(map_definition)
 
     assert expected_map == actual_map
