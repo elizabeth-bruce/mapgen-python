@@ -5,7 +5,7 @@ from mapgen.models import Layer, Map, MapDefinition
 
 @pytest.fixture
 def map_definition():
-    async def test_layer_fn(x: int, y: int):
+    async def test_layer_fn(x: int, y: int, accessor):
         return "test"
 
     layer = Layer(
@@ -24,7 +24,8 @@ def map_definition():
 def map_creator():
     return MapCreator()
 
-def test_generate_map(map_definition, map_creator):
+@pytest.mark.asyncio
+async def test_generate_map(map_definition, map_creator):
     expected_map = Map(
         map_definition = map_definition,
         map_coordinates = {
@@ -33,6 +34,6 @@ def test_generate_map(map_definition, map_creator):
     )
 
 
-    actual_map = map_creator.create_map(map_definition)
+    actual_map = await map_creator.create_map(map_definition)
 
     assert expected_map == actual_map

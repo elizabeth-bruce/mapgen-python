@@ -1,0 +1,19 @@
+{
+    "name": "dependent_layers",
+    "width": 1000,
+    "height": 1000,
+    "layer_configurations": [{
+        "name": "base",
+        "layer_type": "native_resolver",
+	"context": {
+            "filename": "base.py"
+        }
+    },
+    {
+        "name": "dependent",
+        "layer_type": "native_resolver",
+	"context": {
+            "filename": "dependent.py"
+        }
+    }]
+}

@@ -42,7 +42,7 @@ class MapCreator:
 
         return map_coordinate_value
 
-    def create_map_coordinate_set(
+    async def create_map_coordinate_set(
         self, map_definition: MapDefinition
     ) -> MapCoordinateSet:
         self.all_map_coordinates = (
@@ -52,15 +52,20 @@ class MapCreator:
             for layer_name in [layer.name for layer in map_definition.layers]
         )
 
+        for map_coordinate in self.all_map_coordinates:
+            await self.get_map_coordinate_value(map_coordinate)
+
         # import pdb  # noqa
 
         # pdb.set_trace()
-        return self.mock_create_map_coordinate_set(map_definition)
+        return self.map_coordinates
 
-    def create_map(self, map_definition: MapDefinition) -> Map:
+    async def create_map(self, map_definition: MapDefinition) -> Map:
         self.map_definition = map_definition
+
+        await self.create_map_coordinate_set(self.map_definition)
 
         return Map(
             map_definition=map_definition,
-            map_coordinates=self.create_map_coordinate_set(map_definition),
+            map_coordinates=self.map_coordinates,
         )
