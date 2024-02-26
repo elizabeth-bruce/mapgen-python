@@ -3,8 +3,6 @@ import os
 
 from typing import Any
 
-from async_lru import alru_cache
-
 from mapgen.models import Layer, TileAttributeAccessor
 from mapgen.data.models import LayerConfiguration, MapContext
 from mapgen.data.layer_resolvers.layer_resolver import LayerResolver
@@ -54,16 +52,12 @@ class NativeLayerResolver(LayerResolver):
 
         resolver_fn = getattr(module, layer_configuration.name)
 
-        async def layer_fn(
-            x: int, y: int, accessor: TileAttributeAccessor
-        ) -> Any:
+        def layer_fn(x: int, y: int, accessor: TileAttributeAccessor) -> Any:
             def get_tile(x, y):
                 return LazyAccessorTile(x, y, accessor)
 
-            return await resolver_fn(x, y, get_tile)
+            return resolver_fn(x, y, get_tile)
 
-        cached_fn = alru_cache(layer_fn)
-
-        layer = Layer(layer_configuration.name, cached_fn)
+        layer = Layer(layer_configuration.name, layer_fn)
 
         return layer

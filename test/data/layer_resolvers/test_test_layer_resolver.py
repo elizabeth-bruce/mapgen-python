@@ -25,13 +25,12 @@ def test_tile_attribute_accessor():
 def test_map_context():
     return MapContext("")
 
-@pytest.mark.asyncio
-async def test_test_layer_resolver_resolve(test_layer_configuration, test_map_context, test_layer_resolver, test_tile_attribute_accessor):
+def test_test_layer_resolver_resolve(test_layer_configuration, test_map_context, test_layer_resolver, test_tile_attribute_accessor):
     layer = test_layer_resolver.resolve(test_layer_configuration, test_map_context)
 
     assert layer.name == 'test_layer'
 
     fn = layer.fn
 
-    assert await fn(0, 1, test_tile_attribute_accessor) == 1
-    assert await fn(5, 15, test_tile_attribute_accessor) == 20
+    assert fn(0, 1, test_tile_attribute_accessor) == 1
+    assert fn(5, 15, test_tile_attribute_accessor) == 20

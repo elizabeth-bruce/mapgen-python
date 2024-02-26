@@ -1,7 +1,5 @@
 from typing import Any, Dict
 
-# from async_lru import alru_cache
-
 from mapgen.models import MapDefinition, Map, MapCoordinate, MapCoordinateSet
 
 NUM_THREADS = 8
@@ -16,9 +14,7 @@ class MapCreator:
             if map_coordinate not in self.map_coordinates:
                 yield map_coordinate
 
-    async def get_map_coordinate_value(
-        self, map_coordinate: MapCoordinate
-    ) -> Any:
+    def get_map_coordinate_value(self, map_coordinate: MapCoordinate) -> Any:
         if map_coordinate in self.map_coordinates:
             return self.map_coordinates[map_coordinate]
 
@@ -29,13 +25,13 @@ class MapCreator:
 
         fn = layer.fn
 
-        map_coordinate_value = await fn(x, y, self.get_map_coordinate_value)
+        map_coordinate_value = fn(x, y, self.get_map_coordinate_value)
 
         self.map_coordinates[map_coordinate] = map_coordinate_value
 
         return map_coordinate_value
 
-    async def create_map_coordinate_set(
+    def create_map_coordinate_set(
         self, map_definition: MapDefinition
     ) -> MapCoordinateSet:
         self.all_map_coordinates = (
@@ -46,14 +42,14 @@ class MapCreator:
         )
 
         for map_coordinate in self.all_map_coordinates:
-            await self.get_map_coordinate_value(map_coordinate)
+            self.get_map_coordinate_value(map_coordinate)
 
         return self.map_coordinates
 
-    async def create_map(self, map_definition: MapDefinition) -> Map:
+    def create_map(self, map_definition: MapDefinition) -> Map:
         self.map_definition = map_definition
 
-        await self.create_map_coordinate_set(self.map_definition)
+        self.create_map_coordinate_set(self.map_definition)
 
         return Map(
             map_definition=map_definition,

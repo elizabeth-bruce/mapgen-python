@@ -6,9 +6,7 @@ from mapgen.data.layer_resolvers.layer_resolver import LayerResolver
 
 class TestLayerResolver(LayerResolver):
     @staticmethod
-    async def resolver_fn(
-        x: int, y: int, accessor: TileAttributeAccessor
-    ) -> int:
+    def resolver_fn(x: int, y: int, accessor: TileAttributeAccessor) -> int:
         return x + y
 
     def resolve(

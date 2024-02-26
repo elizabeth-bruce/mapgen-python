@@ -25,8 +25,7 @@ def map_definition():
 def map_creator():
     return MapCreator()
 
-@pytest.mark.asyncio
-async def test_generate_map(map_definition, map_creator):
+def test_generate_map(map_definition, map_creator):
     expected_map = Map(
         map_definition = map_definition,
         map_coordinates = {
@@ -36,6 +35,6 @@ async def test_generate_map(map_definition, map_creator):
     )
 
 
-    actual_map = await map_creator.create_map(map_definition)
+    actual_map = map_creator.create_map(map_definition)
 
     assert expected_map == actual_map
