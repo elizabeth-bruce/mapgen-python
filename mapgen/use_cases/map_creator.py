@@ -11,13 +11,6 @@ class MapCreator:
     def __init__(self):
         self.map_coordinates: Dict[MapCoordinate, Any] = {}
 
-    def mock_create_map_coordinate_set(
-        self, map_definition: MapDefinition
-    ) -> MapCoordinateSet:
-        mock_tileset = {(0, 0, "foo"): "test"}
-
-        return mock_tileset
-
     def get_uncreated_map_coordinates(self):
         for map_coordinate in self.all_map_coordinates:
             if map_coordinate not in self.map_coordinates:
@@ -55,9 +48,6 @@ class MapCreator:
         for map_coordinate in self.all_map_coordinates:
             await self.get_map_coordinate_value(map_coordinate)
 
-        # import pdb  # noqa
-
-        # pdb.set_trace()
         return self.map_coordinates
 
     async def create_map(self, map_definition: MapDefinition) -> Map:

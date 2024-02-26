@@ -1,24 +1,25 @@
+import os
 import pytest
 
 from mapgen.use_cases.map_creator import MapCreator
 from mapgen.models import Layer, Map, MapDefinition
 
+from mapgen.data.layer_configuration_loader import LayerConfigurationLoader
+from mapgen.data.map_configuration_loader import MapConfigurationLoader
+
+layer_configuration_loader = LayerConfigurationLoader()
+map_configuration_loader = MapConfigurationLoader(layer_configuration_loader)
+
+
+ROOT_DIR = os.path.abspath(os.curdir)
+
 @pytest.fixture
 def map_definition():
-    async def test_layer_fn(x: int, y: int, accessor):
-        return "test"
-
-    layer = Layer(
-        'foo',
-        test_layer_fn
+    map_definition = map_configuration_loader.load(
+        f"{ROOT_DIR}/test/resources/data/maps/example_map/configuration.json"
     )
 
-    return MapDefinition(
-        'test_definition',
-        1,
-        1,
-        [layer]
-    )
+    return map_definition
 
 @pytest.fixture
 def map_creator():
@@ -29,7 +30,8 @@ async def test_generate_map(map_definition, map_creator):
     expected_map = Map(
         map_definition = map_definition,
         map_coordinates = {
-            (0, 0, "foo"): 'test'
+            (0, 0, "base"): 0,
+            (0, 0, "dependent"): -1
         }
     )
 

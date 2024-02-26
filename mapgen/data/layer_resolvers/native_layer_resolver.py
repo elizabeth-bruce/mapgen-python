@@ -57,7 +57,7 @@ class NativeLayerResolver(LayerResolver):
         async def layer_fn(
             x: int, y: int, accessor: TileAttributeAccessor
         ) -> Any:
-            async def get_tile(x, y):
+            def get_tile(x, y):
                 return LazyAccessorTile(x, y, accessor)
 
             return await resolver_fn(x, y, get_tile)

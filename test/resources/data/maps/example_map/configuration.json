@@ -1,7 +1,7 @@
 {
-    "name": "dependent_layers",
-    "width": 100,
-    "height": 100,
+    "name": "example_map",
+    "width": 1,
+    "height": 1,
     "layer_configurations": [{
         "name": "base",
         "layer_type": "native_resolver",

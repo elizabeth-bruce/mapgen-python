@@ -1,6 +1,8 @@
 import asyncio
 import os
 
+# import cProfile
+
 from mapgen.data.layer_configuration_loader import LayerConfigurationLoader
 from mapgen.data.map_configuration_loader import MapConfigurationLoader
 
@@ -19,6 +21,9 @@ map_definition = map_configuration_loader.load(
 map_creator = MapCreator()
 
 map_coordinate_set = asyncio.run(map_creator.create_map(map_definition))
+# cProfile.run(
+#    "map_coordinate_set = asyncio.run(map_creator.create_map(map_definition))"
+# )
 
 import pdb  # noqa
 
