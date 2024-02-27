@@ -12,6 +12,7 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 def test_layer_configuration():
     return LayerConfiguration(
         'test_layer',
+        'int',
         'test_resolver'
    )
 
@@ -19,6 +20,7 @@ def test_layer_configuration():
 def test_layer_configuration_unknown_layer_type():
     return LayerConfiguration(
         'test_layer',
+        'int',
         'unknown_resolver'
     )
 

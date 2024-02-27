@@ -12,6 +12,7 @@ ROOT_DIR = os.path.abspath(os.curdir)
 def test_layer_configuration():
     return LayerConfiguration(
         'example',
+        'int',
         'native_resolver',
         {
             "filename": "example_layer_fn.py"

@@ -9,6 +9,7 @@ from mapgen.data.layer_resolvers.test_layer_resolver import TestLayerResolver
 def test_layer_configuration():
     return LayerConfiguration(
         'test_layer',
+        'int',
         'test_resolver'
    )
 
