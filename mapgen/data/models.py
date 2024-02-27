@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 @dataclass
 class LayerConfiguration:
     name: str
-    layer_type: str
+    resolver: str
     context: Dict[str, Any] = field(default_factory=dict)
 
 

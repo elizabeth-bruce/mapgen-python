@@ -4,6 +4,6 @@
     "height": 10,
     "layer_configurations": [{
         "name": "bottom_layer",
-	"layer_type": "test_resolver"
+	"resolver": "test_resolver"
     }]
 }

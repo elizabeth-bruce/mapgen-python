@@ -4,14 +4,14 @@
     "height": 100,
     "layer_configurations": [{
         "name": "base",
-        "layer_type": "native_resolver",
+        "resolver": "native_resolver",
 	"context": {
             "filename": "base.py"
         }
     },
     {
         "name": "dependent",
-        "layer_type": "native_resolver",
+        "resolver": "native_resolver",
 	"context": {
             "filename": "dependent.py"
         }

@@ -19,7 +19,7 @@ class LayerConfigurationLoader:
     def load(
         self, layer_configuration: LayerConfiguration, map_context: MapContext
     ) -> Layer:
-        resolver_type = layer_configuration.layer_type
+        resolver_type = layer_configuration.resolver
         resolver_class = LayerConfigurationLoader.layer_resolver_type_map.get(
             resolver_type, None
         )
