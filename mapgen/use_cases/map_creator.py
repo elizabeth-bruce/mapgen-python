@@ -8,7 +8,7 @@ from mapgen.models import MapDefinition, Map, MapCoordinate
 from mapgen.use_cases.shared_memory_map_accessor import SharedMemoryMapAccessor
 from mapgen.use_cases.map_creator_process import MapCreatorProcess
 
-NUM_THREADS = 8
+NUM_THREADS = 3
 
 logger = mp.log_to_stderr()
 
@@ -38,9 +38,9 @@ class MapCreator:
         def get_map_coordinate_generator() -> Iterable[MapCoordinate]:
             return (
                 (x, y, layer_name)
+                for layer_name in layer_names
                 for x in range(0, map_definition.width)
                 for y in range(0, map_definition.height)
-                for layer_name in layer_names
             )
 
         map_coordinate_groups = cycle_generator(

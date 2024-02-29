@@ -1,6 +1,5 @@
 from typing import Any, Dict, Union
 
-from multiprocessing import Lock
 from multiprocessing.sharedctypes import Array, SynchronizedArray
 from ctypes import c_int, c_float, c_char_p
 
@@ -24,11 +23,10 @@ class SharedMemoryMapAccessor(MapAccessor):
         ] = {}
 
         for layer in map_definition.layers:
-            lock = Lock()
             layer_ctype = LAYER_TYPE_TO_CTYPE_MAP[layer.type]
 
             self.layer_map_coordinates[layer.name] = Array(
-                layer_ctype, layer_size, lock=lock  # type: ignore
+                layer_ctype, layer_size, lock=False  # type: ignore
             )
 
     def __getitem__(self, map_coordinate: MapCoordinate) -> Any:
