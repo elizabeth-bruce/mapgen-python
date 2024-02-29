@@ -17,7 +17,8 @@ class LazyAccessorTile:
         self.tile_attribute_accessor = tile_attribute_accessor
 
     def __getattr__(self, attr: str):
-        return self.tile_attribute_accessor((self.x, self.y, attr))
+        map_coordinate = (self.x, self.y, attr)
+        return self.tile_attribute_accessor(map_coordinate)
 
 
 class NativeLayerResolver(LayerResolver):
@@ -58,6 +59,8 @@ class NativeLayerResolver(LayerResolver):
 
             return resolver_fn(x, y, get_tile)
 
-        layer = Layer(layer_configuration.name, layer_fn)
+        layer = Layer(
+            layer_configuration.name, layer_configuration.type, layer_fn
+        )
 
         return layer

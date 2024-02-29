@@ -1,57 +1,67 @@
-from typing import Any, Dict
+import multiprocessing as mp
 
-from mapgen.models import MapDefinition, Map, MapCoordinate, MapCoordinateSet
+from typing import Any, Callable, List
+from collections.abc import Iterable
+
+from mapgen.models import MapDefinition, Map, MapCoordinate
+
+from mapgen.use_cases.shared_memory_map_accessor import SharedMemoryMapAccessor
+from mapgen.use_cases.map_creator_process import MapCreatorProcess
 
 NUM_THREADS = 8
 
+logger = mp.log_to_stderr()
+
+
+def cycle_generator(
+    gf: Callable[[], Iterable[Any]], n: int
+) -> List[Iterable[Any]]:
+    def get_kth_term_of_generator(g, n, k):
+        return (t for i, t in enumerate(g) if i % n == k)
+
+    return [get_kth_term_of_generator(gf(), n, k) for k in range(0, n)]
+
 
 class MapCreator:
-    def __init__(self):
-        self.map_coordinates: Dict[MapCoordinate, Any] = {}
-
-    def get_uncreated_map_coordinates(self):
-        for map_coordinate in self.all_map_coordinates:
-            if map_coordinate not in self.map_coordinates:
-                yield map_coordinate
-
-    def get_map_coordinate_value(self, map_coordinate: MapCoordinate) -> Any:
-        if map_coordinate in self.map_coordinates:
-            return self.map_coordinates[map_coordinate]
-
-        (x, y, layer_name) = map_coordinate
-        layers = self.map_definition.layers
-
-        layer = next((layer for layer in layers if layer.name == layer_name))
-
-        fn = layer.fn
-
-        map_coordinate_value = fn(x, y, self.get_map_coordinate_value)
-
-        self.map_coordinates[map_coordinate] = map_coordinate_value
-
-        return map_coordinate_value
-
-    def create_map_coordinate_set(
-        self, map_definition: MapDefinition
-    ) -> MapCoordinateSet:
-        self.all_map_coordinates = (
-            (x, y, layer_name)
-            for x in range(0, map_definition.width)
-            for y in range(0, map_definition.height)
-            for layer_name in [layer.name for layer in map_definition.layers]
-        )
-
-        for map_coordinate in self.all_map_coordinates:
-            self.get_map_coordinate_value(map_coordinate)
-
-        return self.map_coordinates
-
     def create_map(self, map_definition: MapDefinition) -> Map:
-        self.map_definition = map_definition
+        map_accessor = SharedMemoryMapAccessor(map_definition)
+        layer_fn_map = {
+            layer.name: layer.fn for layer in map_definition.layers
+        }
 
-        self.create_map_coordinate_set(self.map_definition)
+        layer_names = list(layer_fn_map.keys())
 
-        return Map(
-            map_definition=map_definition,
-            map_coordinates=self.map_coordinates,
+        map_creator_process = MapCreatorProcess(
+            map_accessor, layer_fn_map, logger
         )
+
+        def get_map_coordinate_generator() -> Iterable[MapCoordinate]:
+            return (
+                (x, y, layer_name)
+                for x in range(0, map_definition.width)
+                for y in range(0, map_definition.height)
+                for layer_name in layer_names
+            )
+
+        map_coordinate_groups = cycle_generator(
+            get_map_coordinate_generator, NUM_THREADS
+        )
+
+        def create_process(map_coordinates: Iterable[MapCoordinate]):
+            return mp.Process(
+                target=map_creator_process.process_map_coordinates,
+                args=(map_coordinates,),
+            )
+
+        processes = [
+            create_process(map_coordinates)
+            for map_coordinates in map_coordinate_groups
+        ]
+
+        for process in processes:
+            process.start()
+
+        for process in processes:
+            process.join()
+
+        return Map(map_definition=map_definition, map_accessor=map_accessor)

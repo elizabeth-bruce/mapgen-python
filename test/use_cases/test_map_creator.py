@@ -26,15 +26,9 @@ def map_creator():
     return MapCreator()
 
 def test_generate_map(map_definition, map_creator):
-    expected_map = Map(
-        map_definition = map_definition,
-        map_coordinates = {
-            (0, 0, "base"): 0,
-            (0, 0, "dependent"): -1
-        }
-    )
-
-
     actual_map = map_creator.create_map(map_definition)
 
-    assert expected_map == actual_map
+    assert actual_map.map_definition == map_definition
+
+    assert actual_map.map_accessor[(0, 0, 'base')] == 0
+    assert actual_map.map_accessor[(0, 0, 'dependent')] == -1

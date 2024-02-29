@@ -12,6 +12,8 @@ class TestLayerResolver(LayerResolver):
     def resolve(
         self, layer_configuration: LayerConfiguration, map_context: MapContext
     ) -> Layer:
-        layer = Layer(layer_configuration.name, TestLayerResolver.resolver_fn)
+        layer = Layer(
+            layer_configuration.name, "int", TestLayerResolver.resolver_fn
+        )
 
         return layer

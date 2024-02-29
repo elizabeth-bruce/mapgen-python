@@ -1,0 +1,2 @@
+class InvalidMapCoordinateException(Exception):
+    pass
