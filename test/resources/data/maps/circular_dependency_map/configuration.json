@@ -1,0 +1,21 @@
+{
+    "name": "example_map",
+    "width": 1,
+    "height": 1,
+    "layer_configurations": [{
+        "name": "base",
+        "resolver": "native_resolver",
+	"type": "int",
+	"context": {
+            "filename": "base.py"
+        }
+    },
+    {
+        "name": "dependent",
+        "resolver": "native_resolver",
+	"type": "int",
+	"context": {
+            "filename": "dependent.py"
+        }
+    }]
+}
