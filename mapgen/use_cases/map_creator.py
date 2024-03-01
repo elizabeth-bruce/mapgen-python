@@ -1,6 +1,5 @@
 import multiprocessing as mp
 
-from typing import Any, Callable, List
 from collections.abc import Iterable
 
 from mapgen.models import MapDefinition, Map, MapCoordinate
@@ -8,18 +7,27 @@ from mapgen.models import MapDefinition, Map, MapCoordinate
 from mapgen.use_cases.shared_memory_map_accessor import SharedMemoryMapAccessor
 from mapgen.use_cases.map_creator_process import MapCreatorProcess
 
-NUM_THREADS = 3
+NUM_PROCESSES = 8
 
 logger = mp.log_to_stderr()
 
 
-def cycle_generator(
-    gf: Callable[[], Iterable[Any]], n: int
-) -> List[Iterable[Any]]:
-    def get_kth_term_of_generator(g, n, k):
-        return (t for i, t in enumerate(g) if i % n == k)
+def get_map_coordinates(
+    map_definition: MapDefinition, period: int, offset: int
+) -> Iterable[MapCoordinate]:
+    layer_names = [layer.name for layer in map_definition.layers]
+    num_layers = len(layer_names)
+    width = map_definition.width
+    height = map_definition.height
 
-    return [get_kth_term_of_generator(gf(), n, k) for k in range(0, n)]
+    return (
+        (
+            (idx // num_layers) % width,
+            idx // (width * num_layers),
+            layer_names[idx % num_layers],
+        )
+        for idx in range(offset, num_layers * width * height, period)
+    )
 
 
 class MapCreator:
@@ -29,23 +37,14 @@ class MapCreator:
             layer.name: layer.fn for layer in map_definition.layers
         }
 
-        layer_names = list(layer_fn_map.keys())
-
         map_creator_process = MapCreatorProcess(
             map_accessor, layer_fn_map, logger
         )
 
-        def get_map_coordinate_generator() -> Iterable[MapCoordinate]:
-            return (
-                (x, y, layer_name)
-                for layer_name in layer_names
-                for x in range(0, map_definition.width)
-                for y in range(0, map_definition.height)
-            )
-
-        map_coordinate_groups = cycle_generator(
-            get_map_coordinate_generator, NUM_THREADS
-        )
+        map_coordinate_groups = [
+            get_map_coordinates(map_definition, NUM_PROCESSES, i)
+            for i in range(0, NUM_PROCESSES)
+        ]
 
         def create_process(map_coordinates: Iterable[MapCoordinate]):
             return mp.Process(
