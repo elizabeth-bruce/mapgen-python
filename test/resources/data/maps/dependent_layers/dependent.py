@@ -1,3 +1,6 @@
 def dependent(x: int, y: int, get_tile) -> int:
-    return get_tile(x,y).base - 1
+    if x == 99:
+        return 5
+    else:
+        return get_tile(x + 1, y).dependent + 1
 

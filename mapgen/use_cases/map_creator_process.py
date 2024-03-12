@@ -36,9 +36,7 @@ class MapCreatorProcess:
         layer_fn = self.layer_fn_map[layer_name]
 
         dependent_coordinates.add(map_coordinate)
-        next_accessor = partial(
-            self.process_map_coordinate, dependent_coordinates
-        )
+        next_accessor = partial(self.process_map_coordinate, dependent_coordinates)
         map_coordinate_val = layer_fn(x, y, next_accessor)
 
         self.map_accessor[map_coordinate] = map_coordinate_val

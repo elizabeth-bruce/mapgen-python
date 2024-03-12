@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.12"
 gnureadline = "^8.1.2"
 async-lru = "^2.0.4"
+numpy = "^1.26.4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.2.0"

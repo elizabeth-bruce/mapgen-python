@@ -15,13 +15,28 @@ type LayerFn = Callable[  # type: ignore
 ]  # type: ignore
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Layer:
     name: str
     type: str
+
+
+@dataclass(kw_only=True)
+class UserDefinedFnLayer(Layer):
+    layer_type: str = "USER_DEFINED_FN"
     fn: LayerFn
 
 
+@dataclass(kw_only=True)
+class FrequencyFilteredNoiseLayer(Layer):
+    layer_type: str = "FREQUENCY_FILTERED_NOISE"
+    decay_x: float
+    decay_y: float
+    decay_x_y: float
+    roughness: float
+
+
+type DefinedLayer = FrequencyFilteredNoiseLayer | UserDefinedFnLayer  # type: ignore
 type MapCoordinateSet = Dict[MapCoordinate, Any]  # type: ignore
 
 
@@ -40,7 +55,7 @@ class MapDefinition:
     name: str
     width: int
     height: int
-    layers: List[Layer]
+    layers: List[DefinedLayer]
 
 
 @dataclass

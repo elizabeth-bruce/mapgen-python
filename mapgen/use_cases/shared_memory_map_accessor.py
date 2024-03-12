@@ -18,9 +18,7 @@ class SharedMemoryMapAccessor(MapAccessor):
 
         layer_size = self.width * self.height
 
-        self.layer_map_coordinates: Dict[
-            str, SynchronizedArray[ALLOWED_CTYPE]
-        ] = {}
+        self.layer_map_coordinates: Dict[str, SynchronizedArray[ALLOWED_CTYPE]] = {}
 
         for layer in map_definition.layers:
             layer_ctype = LAYER_TYPE_TO_CTYPE_MAP[layer.type]
@@ -66,3 +64,6 @@ class SharedMemoryMapAccessor(MapAccessor):
         idx = (y * self.width) + x
 
         layer_map_array[idx] = val
+
+    def get_shared_memory(self, layer_name: str):
+        return self.layer_map_coordinates[layer_name]

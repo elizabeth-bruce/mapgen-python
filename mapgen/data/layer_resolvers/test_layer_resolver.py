@@ -1,4 +1,4 @@
-from mapgen.models import Layer, TileAttributeAccessor
+from mapgen.models import UserDefinedFnLayer, TileAttributeAccessor
 
 from mapgen.data.models import LayerConfiguration, MapContext
 from mapgen.data.layer_resolvers.layer_resolver import LayerResolver
@@ -11,9 +11,11 @@ class TestLayerResolver(LayerResolver):
 
     def resolve(
         self, layer_configuration: LayerConfiguration, map_context: MapContext
-    ) -> Layer:
-        layer = Layer(
-            layer_configuration.name, "int", TestLayerResolver.resolver_fn
+    ) -> UserDefinedFnLayer:
+        layer = UserDefinedFnLayer(
+            name=layer_configuration.name,
+            type="int",
+            fn=TestLayerResolver.resolver_fn,
         )
 
         return layer

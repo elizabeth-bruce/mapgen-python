@@ -23,9 +23,7 @@ class MapConfigurationLoader:
                 config_json = json.load(config_file)
                 layer_configurations = [
                     LayerConfiguration(**layer_configuration)
-                    for layer_configuration in config_json[
-                        "layer_configurations"
-                    ]
+                    for layer_configuration in config_json["layer_configurations"]
                 ]
 
                 config_json["layer_configurations"] = layer_configurations
@@ -41,9 +39,7 @@ class MapConfigurationLoader:
         self, map_configuration: MapConfiguration, map_context: MapContext
     ) -> MapDefinition:
         layers = [
-            self.layer_configuration_loader.load(
-                layer_configuration, map_context
-            )
+            self.layer_configuration_loader.load(layer_configuration, map_context)
             for layer_configuration in map_configuration.layer_configurations
         ]
 
@@ -59,8 +55,6 @@ class MapConfigurationLoader:
     def load(self, filename: str) -> MapDefinition:
         map_configuration = self.__load_file(filename)
         map_context = self.__generate_map_context(filename)
-        map_definition = self.__generate_map_definition(
-            map_configuration, map_context
-        )
+        map_definition = self.__generate_map_definition(map_configuration, map_context)
 
         return map_definition

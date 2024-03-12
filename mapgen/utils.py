@@ -14,9 +14,7 @@ def cpu_profiler():
         yield pr
     finally:
         pr.disable()
-        lid = "".join(
-            random.choices(string.ascii_uppercase + string.digits, k=5)
-        )
+        lid = "".join(random.choices(string.ascii_uppercase + string.digits, k=5))
         pr.dump_stats(f"profiles/cpu_{lid}.prof")
         with open(f"profiles/cpu_{lid}.txt", "w") as output_file:
             sys.stdout = output_file
