@@ -18,4 +18,4 @@ map_definition = map_configuration_loader.load(
 
 if __name__ == "__main__":
     map_creator = MapCreator()
-    new_map = map_creator.create_map(map_definition)
+    new_map = map_creator.create_map(map_definition, 1)

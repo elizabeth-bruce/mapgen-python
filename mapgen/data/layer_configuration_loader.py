@@ -7,6 +7,7 @@ from mapgen.data.layer_generators import (
     LayerGenerator,
     NativeLayerGenerator,
     TestLayerGenerator,
+    FrequencyFilteredNoiseLayerGenerator,
 )
 
 
@@ -14,6 +15,7 @@ class LayerConfigurationLoader:
     layer_generator_type_map: Dict[str, Type[LayerGenerator]] = {
         "test_generator": TestLayerGenerator,
         "native_generator": NativeLayerGenerator,
+        "FREQUENCY_FILTERED_NOISE": FrequencyFilteredNoiseLayerGenerator,
     }
 
     def load(

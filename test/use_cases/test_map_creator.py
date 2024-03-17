@@ -25,8 +25,12 @@ def map_definition():
 def map_creator():
     return MapCreator()
 
-def test_generate_map(map_definition, map_creator):
-    actual_map = map_creator.create_map(map_definition)
+@pytest.fixture
+def seed():
+    return 1
+
+def test_generate_map(map_definition, map_creator, seed):
+    actual_map = map_creator.create_map(map_definition, seed)
 
     assert actual_map.map_definition == map_definition
 

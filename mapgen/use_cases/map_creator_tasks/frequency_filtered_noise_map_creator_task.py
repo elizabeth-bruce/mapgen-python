@@ -1,4 +1,5 @@
 from numpy import arange, copyto, ndarray, fft, ix_, power, random
+from numpy.random import RandomState
 from numpy.typing import NDArray
 
 from mapgen.models import (
@@ -16,7 +17,9 @@ class FrequencyFilteredNoiseMapCreatorTask(MapCreatorTask):
     def __init__(self, map_accessor: SharedMemoryMapAccessor):
         self.map_accessor = map_accessor
 
-    def populate(self, map_definition: MapDefinition) -> None:
+    def populate(
+        self, map_definition: MapDefinition, random_state: RandomState
+    ) -> None:
         pass
 
     def populate_layer(

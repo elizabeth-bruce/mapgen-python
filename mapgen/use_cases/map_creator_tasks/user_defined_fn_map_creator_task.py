@@ -1,3 +1,5 @@
+from numpy.random import RandomState
+
 import multiprocessing as mp
 from collections.abc import Iterable
 
@@ -45,7 +47,9 @@ class UserDefinedFnMapCreatorTask(MapCreatorTask):
             for idx in range(offset, num_layers * width * height, period)
         )
 
-    def populate(self, map_definition: MapDefinition) -> None:
+    def populate(
+        self, map_definition: MapDefinition, random_state: RandomState
+    ) -> None:
         layers = UserDefinedFnMapCreatorTask.get_layers_to_populate(map_definition)
 
         layer_fn_map = {layer.name: layer.fn for layer in layers}
