@@ -2,7 +2,7 @@ import json
 import os
 import pytest
 
-from mapgen.data.errors import UnknownLayerResolverException
+from mapgen.data.errors import UnknownLayerGeneratorException
 from mapgen.data.models import LayerConfiguration, MapContext
 from mapgen.data.layer_configuration_loader import LayerConfigurationLoader
 
@@ -12,16 +12,20 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 def test_layer_configuration():
     return LayerConfiguration(
         'test_layer',
-        'int',
-        'test_resolver'
+        'test_generator',
+        {
+            "type": "int"
+        }
    )
 
 @pytest.fixture
 def test_layer_configuration_unknown_layer_type():
     return LayerConfiguration(
         'test_layer',
-        'int',
-        'unknown_resolver'
+        'unknown_generator',
+        {
+            "type": "int"
+        }
     )
 
 @pytest.fixture
@@ -39,7 +43,7 @@ def test_tile_attribute_accessor():
 def test_map_context():
     return MapContext(f"{ROOT_DIR}/test/resources/data")
 
-def test_layer_configuration_loader_test_resolver(test_layer_configuration, test_map_context, test_layer_configuration_loader, test_tile_attribute_accessor):
+def test_layer_configuration_loader_test_generator(test_layer_configuration, test_map_context, test_layer_configuration_loader, test_tile_attribute_accessor):
     layer = test_layer_configuration_loader.load(test_layer_configuration, test_map_context)
 
     assert layer.name == 'test_layer'
@@ -50,6 +54,6 @@ def test_layer_configuration_loader_test_resolver(test_layer_configuration, test
     assert fn(5, 15, test_tile_attribute_accessor) == 20
 
 def test_layer_configuration_loader_unknown_layer_type(test_layer_configuration_unknown_layer_type, test_map_context, test_layer_configuration_loader):
-    with pytest.raises(UnknownLayerResolverException) as exc:
+    with pytest.raises(UnknownLayerGeneratorException) as exc:
         test_layer_configuration_loader.load(test_layer_configuration_unknown_layer_type, test_map_context)
 

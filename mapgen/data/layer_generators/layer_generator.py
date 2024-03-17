@@ -4,7 +4,7 @@ from mapgen.models import DefinedLayer
 from mapgen.data.models import LayerConfiguration, MapContext
 
 
-class LayerResolver(ABC):
+class LayerGenerator(ABC):
     @abstractmethod
     def resolve(
         self, layer_configuration: LayerConfiguration, map_context: MapContext

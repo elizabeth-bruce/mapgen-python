@@ -1,12 +1,12 @@
 from mapgen.models import UserDefinedFnLayer, TileAttributeAccessor
 
 from mapgen.data.models import LayerConfiguration, MapContext
-from mapgen.data.layer_resolvers.layer_resolver import LayerResolver
+from mapgen.data.layer_generators.layer_generator import LayerGenerator
 
 
-class TestLayerResolver(LayerResolver):
+class TestLayerGenerator(LayerGenerator):
     @staticmethod
-    def resolver_fn(x: int, y: int, accessor: TileAttributeAccessor) -> int:
+    def generator_fn(x: int, y: int, accessor: TileAttributeAccessor) -> int:
         return x + y
 
     def resolve(
@@ -15,7 +15,7 @@ class TestLayerResolver(LayerResolver):
         layer = UserDefinedFnLayer(
             name=layer_configuration.name,
             type="int",
-            fn=TestLayerResolver.resolver_fn,
+            fn=TestLayerGenerator.generator_fn,
         )
 
         return layer

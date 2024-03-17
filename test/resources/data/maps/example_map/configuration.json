@@ -4,17 +4,17 @@
     "height": 1,
     "layer_configurations": [{
         "name": "base",
-        "resolver": "native_resolver",
-	"type": "int",
+        "generator": "native_generator",
 	"context": {
+	    "type": "int",
             "filename": "base.py"
         }
     },
     {
         "name": "dependent",
-        "resolver": "native_resolver",
-	"type": "int",
+        "generator": "native_generator",
 	"context": {
+	    "type": "int",
             "filename": "dependent.py"
         }
     }]

@@ -3,19 +3,21 @@ import os
 import pytest
 
 from mapgen.data.models import LayerConfiguration, MapContext
-from mapgen.data.layer_resolvers.test_layer_resolver import TestLayerResolver
+from mapgen.data.layer_generators.test_layer_generator import TestLayerGenerator
 
 @pytest.fixture
 def test_layer_configuration():
     return LayerConfiguration(
         'test_layer',
-        'int',
-        'test_resolver'
+        'test_generator',
+        {
+            "type": "int"
+        }
    )
 
 @pytest.fixture
-def test_layer_resolver():
-    return TestLayerResolver()
+def test_layer_generator():
+    return TestLayerGenerator()
 
 @pytest.fixture
 def test_tile_attribute_accessor():
@@ -26,8 +28,8 @@ def test_tile_attribute_accessor():
 def test_map_context():
     return MapContext("")
 
-def test_test_layer_resolver_resolve(test_layer_configuration, test_map_context, test_layer_resolver, test_tile_attribute_accessor):
-    layer = test_layer_resolver.resolve(test_layer_configuration, test_map_context)
+def test_test_layer_generator_resolve(test_layer_configuration, test_map_context, test_layer_generator, test_tile_attribute_accessor):
+    layer = test_layer_generator.resolve(test_layer_configuration, test_map_context)
 
     assert layer.name == 'test_layer'
 

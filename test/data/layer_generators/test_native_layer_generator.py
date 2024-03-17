@@ -3,7 +3,7 @@ import os
 import pytest
 
 from mapgen.data.models import LayerConfiguration, MapContext
-from mapgen.data.layer_resolvers.native_layer_resolver import NativeLayerResolver
+from mapgen.data.layer_generators.native_layer_generator import NativeLayerGenerator
 
 ROOT_DIR = os.path.abspath(os.curdir)
 
@@ -12,16 +12,16 @@ ROOT_DIR = os.path.abspath(os.curdir)
 def test_layer_configuration():
     return LayerConfiguration(
         'example',
-        'int',
-        'native_resolver',
+        'native_generator',
         {
+            "type": "int",
             "filename": "example_layer_fn.py"
         }
    )
 
 @pytest.fixture
-def native_layer_resolver():
-    return NativeLayerResolver()
+def native_layer_generator():
+    return NativeLayerGenerator()
 
 @pytest.fixture
 def test_tile_attribute_accessor():
@@ -32,8 +32,8 @@ def test_tile_attribute_accessor():
 def test_map_context():
     return MapContext(f"{ROOT_DIR}/test/resources/data")
 
-def test_native_layer_resolver_resolve(test_layer_configuration, test_map_context, native_layer_resolver, test_tile_attribute_accessor):
-    layer = native_layer_resolver.resolve(test_layer_configuration, test_map_context)
+def test_native_layer_generator_resolve(test_layer_configuration, test_map_context, native_layer_generator, test_tile_attribute_accessor):
+    layer = native_layer_generator.resolve(test_layer_configuration, test_map_context)
 
     assert layer.name == 'example'
 

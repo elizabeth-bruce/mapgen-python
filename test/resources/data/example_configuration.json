@@ -4,7 +4,9 @@
     "height": 10,
     "layer_configurations": [{
         "name": "bottom_layer",
-	"resolver": "test_resolver",
-	"type": "int"
+	"generator": "test_generator",
+	"context": {
+	    "type": "int"
+	}
     }]
 }

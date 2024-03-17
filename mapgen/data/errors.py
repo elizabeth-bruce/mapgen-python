@@ -1,2 +1,2 @@
-class UnknownLayerResolverException(Exception):
+class UnknownLayerGeneratorException(Exception):
     pass

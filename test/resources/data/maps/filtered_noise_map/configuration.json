@@ -6,7 +6,6 @@
         "name": "base",
         "generator": "native_generator",
 	"context": {
-	    "type": "int",
             "filename": "base.py"
         }
     },

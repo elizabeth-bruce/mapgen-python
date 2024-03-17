@@ -5,7 +5,7 @@ from typing import Any
 
 from mapgen.models import UserDefinedFnLayer, TileAttributeAccessor
 from mapgen.data.models import LayerConfiguration, MapContext
-from mapgen.data.layer_resolvers.layer_resolver import LayerResolver
+from mapgen.data.layer_generators.layer_generator import LayerGenerator
 
 
 class LazyAccessorTile:
@@ -19,14 +19,14 @@ class LazyAccessorTile:
         return self.tile_attribute_accessor(map_coordinate)
 
 
-class NativeLayerResolver(LayerResolver):
+class NativeLayerGenerator(LayerGenerator):
     def resolve(
         self, layer_configuration: LayerConfiguration, map_context: MapContext
     ) -> UserDefinedFnLayer:
         layer_context = layer_configuration.context
         file_path = os.path.join(map_context.file_path, layer_context["filename"])
 
-        module_name = "mapgen_layer_resolver"
+        module_name = "mapgen_layer_generator"
 
         spec = importlib.util.spec_from_file_location(module_name, file_path)
 
@@ -45,17 +45,17 @@ class NativeLayerResolver(LayerResolver):
 
         spec.loader.exec_module(module)
 
-        resolver_fn = getattr(module, layer_configuration.name)
+        generator_fn = getattr(module, layer_configuration.name)
 
         def layer_fn(x: int, y: int, accessor: TileAttributeAccessor) -> Any:
             def get_tile(x, y):
                 return LazyAccessorTile(x, y, accessor)
 
-            return resolver_fn(x, y, get_tile)
+            return generator_fn(x, y, get_tile)
 
         layer = UserDefinedFnLayer(
             name=layer_configuration.name,
-            type=layer_configuration.type,
+            type=layer_configuration.context["type"],
             fn=layer_fn,
         )
 

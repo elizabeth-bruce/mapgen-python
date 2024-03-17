@@ -4,8 +4,9 @@
     "height": 10,
     "layer_configurations": [{
         "name": "example",
-        "layer_type": "native_resolver",
+        "generator": "native_resolver",
 	"context": {
+	    "type": "int",
             "filename": "example_layer_fn.py"
         }
     }]
