@@ -27,9 +27,7 @@ class LayerConfigurationLoader:
         )
 
         if not generator_class:
-            raise UnknownLayerGeneratorException(
-                f"Generator type {generator_type} not found"
-            )
+            raise UnknownLayerGeneratorException(f"Generator type {generator_type} not found")
 
         generator = generator_class()
 

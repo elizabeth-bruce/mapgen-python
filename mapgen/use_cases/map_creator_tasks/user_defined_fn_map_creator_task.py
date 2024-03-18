@@ -47,21 +47,15 @@ class UserDefinedFnMapCreatorTask(MapCreatorTask):
             for idx in range(offset, num_layers * width * height, period)
         )
 
-    def populate(
-        self, map_definition: MapDefinition, random_state: RandomState
-    ) -> None:
+    def populate(self, map_definition: MapDefinition, random_state: RandomState) -> None:
         layers = UserDefinedFnMapCreatorTask.get_layers_to_populate(map_definition)
 
         layer_fn_map = {layer.name: layer.fn for layer in layers}
 
-        map_creator_process = MapCreatorProcess(
-            self.map_accessor, layer_fn_map, logger
-        )
+        map_creator_process = MapCreatorProcess(self.map_accessor, layer_fn_map, logger)
 
         map_coordinate_groups = [
-            UserDefinedFnMapCreatorTask.get_map_coordinates(
-                map_definition, NUM_PROCESSES, i
-            )
+            UserDefinedFnMapCreatorTask.get_map_coordinates(map_definition, NUM_PROCESSES, i)
             for i in range(0, NUM_PROCESSES)
         ]
 
@@ -71,10 +65,7 @@ class UserDefinedFnMapCreatorTask(MapCreatorTask):
                 args=(map_coordinates,),
             )
 
-        processes = [
-            create_process(map_coordinates)
-            for map_coordinates in map_coordinate_groups
-        ]
+        processes = [create_process(map_coordinates) for map_coordinates in map_coordinate_groups]
 
         for process in processes:
             process.start()

@@ -43,8 +43,6 @@ class MapCreatorProcess:
 
         return map_coordinate_val
 
-    def process_map_coordinates(
-        self, map_coordinates: Iterable[MapCoordinate]
-    ) -> None:
+    def process_map_coordinates(self, map_coordinates: Iterable[MapCoordinate]) -> None:
         for map_coordinate in map_coordinates:
             self.process_map_coordinate(set(), map_coordinate)

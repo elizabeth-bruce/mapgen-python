@@ -39,9 +39,7 @@ class NativeLayerGenerator(LayerGenerator):
 
         module = importlib.util.module_from_spec(spec)
 
-        assert (
-            module is not None
-        ), f"Python code at location {file_path} could not be imported"
+        assert module is not None, f"Python code at location {file_path} could not be imported"
 
         spec.loader.exec_module(module)
 

@@ -31,17 +31,13 @@ class FrequencyFilteredNoiseMapCreatorTask(MapCreatorTask):
             if layer.layer_type == "FREQUENCY_FILTERED_NOISE"
         ]
 
-    def populate(
-        self, map_definition: MapDefinition, random_state: RandomState
-    ) -> None:
+    def populate(self, map_definition: MapDefinition, random_state: RandomState) -> None:
         filtered_layers = FrequencyFilteredNoiseMapCreatorTask.get_layers_to_populate(
             map_definition
         )
 
         for layer in filtered_layers:
-            self.populate_layer(
-                layer, map_definition.width, map_definition.height, random_state
-            )
+            self.populate_layer(layer, map_definition.width, map_definition.height, random_state)
 
     def populate_layer(
         self,
@@ -71,14 +67,10 @@ class FrequencyFilteredNoiseMapCreatorTask(MapCreatorTask):
         # When transforming the noise data from the frequency back to the time
         # domain, we have to include a scale factor of (width * height) to offset
         # the same amount it gets shrunk due to normalization
-        filtered_noise_values = (
-            width * height * fft.irfft2(filtered_frequency_noise_values)
-        )
+        filtered_noise_values = width * height * fft.irfft2(filtered_frequency_noise_values)
 
         # Write the filtered noise data to the shared memory for the layer
         shared_memory = self.map_accessor.get_shared_memory(name)
-        destination: NDArray = ndarray(
-            shape=(height, width), dtype=c_float, buffer=shared_memory
-        )
+        destination: NDArray = ndarray(shape=(height, width), dtype=c_float, buffer=shared_memory)
 
         copyto(destination, filtered_noise_values)

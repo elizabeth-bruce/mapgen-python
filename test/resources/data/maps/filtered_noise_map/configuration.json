@@ -16,7 +16,7 @@
         "name": "dependent",
         "generator": "native_generator",
 	"context": {
-	    "type": "int",
+	    "type": "float",
             "filename": "dependent.py"
         }
     }]
