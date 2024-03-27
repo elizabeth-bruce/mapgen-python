@@ -12,7 +12,7 @@ map_configuration_loader = MapConfigurationLoader(layer_configuration_loader)
 ROOT_DIR = os.path.abspath(os.curdir)
 
 map_definition = map_configuration_loader.load(
-    f"{ROOT_DIR}/test/resources/data/maps/filtered_noise_map/configuration.json"
+    f"{ROOT_DIR}/test/resources/data/maps/lua_map/configuration.json"
 )
 
 

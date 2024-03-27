@@ -7,7 +7,10 @@ from mapgen.data.layer_generators.frequency_filtered_noise_layer_generator impor
     FrequencyFilteredNoiseLayerGenerator,
 )
 
+from mapgen.data.layer_generators.lua_layer_generator import LuaLayerGenerator
+
 LayerGenerator
 NativeLayerGenerator
 TestLayerGenerator
 FrequencyFilteredNoiseLayerGenerator
+LuaLayerGenerator

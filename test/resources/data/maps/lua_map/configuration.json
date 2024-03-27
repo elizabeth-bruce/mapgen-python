@@ -1,0 +1,21 @@
+{
+    "name": "example_map",
+    "width": 1,
+    "height": 1,
+    "layer_configurations": [{
+        "name": "base",
+        "generator": "LUA",
+        "context": {
+            "type": "int",
+	    "filename": "base.lua"
+        }
+    },
+    {
+        "name": "dependent",
+        "generator": "LUA",
+        "context": {
+            "type": "int",
+	    "filename": "dependent.lua"
+        }
+    }]
+}

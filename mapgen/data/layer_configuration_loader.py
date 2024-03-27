@@ -8,6 +8,7 @@ from mapgen.data.layer_generators import (
     NativeLayerGenerator,
     TestLayerGenerator,
     FrequencyFilteredNoiseLayerGenerator,
+    LuaLayerGenerator,
 )
 
 
@@ -16,6 +17,7 @@ class LayerConfigurationLoader:
         "test_generator": TestLayerGenerator,
         "native_generator": NativeLayerGenerator,
         "FREQUENCY_FILTERED_NOISE": FrequencyFilteredNoiseLayerGenerator,
+        "LUA": LuaLayerGenerator,
     }
 
     def load(
