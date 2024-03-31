@@ -1,0 +1,23 @@
+{
+    "name": "full_map",
+    "width": 100,
+    "height": 100,
+    "layer_configurations": [{
+        "name": "height",
+        "generator": "FREQUENCY_FILTERED_NOISE",
+        "context": {
+            "roughness": 0.15,
+            "decay_x": 2.5,
+            "decay_y": 2.5,
+            "decay_x_y": 0.5
+	}
+    },
+    {
+        "name": "temperature",
+        "generator": "LUA",
+        "context": {
+            "type": "float",
+            "filename": "temperature.lua"
+        }
+    }]
+}
