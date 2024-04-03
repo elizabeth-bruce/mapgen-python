@@ -6,36 +6,59 @@ from unittest.mock import Mock
 from mapgen.use_cases.shared_memory_map_accessor import SharedMemoryMapAccessor
 from mapgen.use_cases.exceptions import InvalidMapCoordinateException
 from mapgen.data.layer_configuration_loader import LayerConfigurationLoader
-from mapgen.data.map_configuration_loader import MapConfigurationLoader
-
-ROOT_DIR = os.path.abspath(os.curdir)
-
-layer_configuration_loader = LayerConfigurationLoader()
-map_configuration_loader = MapConfigurationLoader(layer_configuration_loader)
+from mapgen.data.file_map_configuration_loader import FileMapConfigurationLoader
+from mapgen.data.map_definition_loader import MapDefinitionLoader
 
 from mapgen.use_cases.map_creator_process import MapCreatorProcess
 from mapgen.use_cases.exceptions import CircularDependencyException
 
-@pytest.fixture
-def map_definition():
-    map_definition = map_configuration_loader.load(
-        f"{ROOT_DIR}/test/resources/data/maps/example_map/configuration.json"
-    )
-
-    return map_definition
+ROOT_DIR = os.path.abspath(os.curdir)
+MAP_PATH = f"{ROOT_DIR}/test/resources/data/maps/example_map/configuration.json"
+MAP_PATH_CIRCULAR_DEPENDENCY = f"{ROOT_DIR}/test/resources/data/maps/circular_dependency_map/configuration.json"
 
 @pytest.fixture
-def map_definition_circular_dependency():
-    map_definition = map_configuration_loader.load(
-        f"{ROOT_DIR}/test/resources/data/maps/circular_dependency_map/configuration.json"
+def test_layer_configuration_loader():
+    return LayerConfigurationLoader()
+
+@pytest.fixture
+def test_map_configuration_loader():
+    return FileMapConfigurationLoader(MAP_PATH)
+
+@pytest.fixture
+def test_map_configuration_loader_circular_dependency():
+    return FileMapConfigurationLoader(MAP_PATH_CIRCULAR_DEPENDENCY)
+
+@pytest.fixture
+def test_map_definition_loader(
+    test_layer_configuration_loader,
+    test_map_configuration_loader
+):
+    return MapDefinitionLoader(
+        test_layer_configuration_loader,
+        test_map_configuration_loader
     )
 
-    return map_definition
+@pytest.fixture
+def test_map_definition_loader_circular_dependency(
+    test_layer_configuration_loader,
+    test_map_configuration_loader_circular_dependency
+):
+    return MapDefinitionLoader(
+        test_layer_configuration_loader,
+        test_map_configuration_loader_circular_dependency
+    )
+
+@pytest.fixture
+def map_definition(test_map_definition_loader):
+    return test_map_definition_loader.load()
+
+@pytest.fixture
+def map_definition_circular_dependency(test_map_definition_loader_circular_dependency):
+    return test_map_definition_loader_circular_dependency.load()
 
 @pytest.fixture
 def map_accessor(map_definition):
-     map_accessor = SharedMemoryMapAccessor(map_definition)
-     return map_accessor
+     return SharedMemoryMapAccessor(map_definition)
 
 @pytest.fixture
 def map_accessor_circular_dependency(map_definition_circular_dependency):

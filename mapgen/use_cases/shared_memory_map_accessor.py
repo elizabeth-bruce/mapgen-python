@@ -1,3 +1,5 @@
+from numpy import frombuffer
+
 from typing import Any, Dict, Union
 
 from multiprocessing.sharedctypes import Array, SynchronizedArray
@@ -67,3 +69,6 @@ class SharedMemoryMapAccessor(MapAccessor):
 
     def get_shared_memory(self, layer_name: str):
         return self.layer_map_coordinates[layer_name]
+
+    def get_raw_values(self, layer_name: str):
+        return frombuffer(self.layer_map_coordinates[layer_name])

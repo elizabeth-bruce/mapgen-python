@@ -1,3 +1,5 @@
+from numpy.typing import NDArray
+
 from typing import Any, Callable, Dict, List, Tuple
 
 from abc import ABC, abstractmethod
@@ -47,6 +49,10 @@ class MapAccessor(ABC):
 
     @abstractmethod
     def __setitem__(self, key, val):
+        pass
+
+    @abstractmethod
+    def get_raw_values(self, layer_name: str) -> NDArray[Any]:
         pass
 
 
