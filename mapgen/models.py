@@ -63,8 +63,19 @@ class MapDefinition:
     height: int
     layers: List[DefinedLayer]
 
+@dataclass
+class LayerMetadata:
+    name: str
+    type: str
+
+@dataclass
+class MapMetadata:
+    name: str
+    width: int
+    height: int
+    layers: List[LayerMetadata]
 
 @dataclass
 class Map:
-    map_definition: MapDefinition
+    map_metadata: MapMetadata
     map_accessor: MapAccessor
