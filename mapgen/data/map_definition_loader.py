@@ -1,8 +1,5 @@
-import json
-import os
-
 from mapgen.models import MapDefinition
-from mapgen.data.models import LayerConfiguration, MapConfiguration, MapContext
+from mapgen.data.models import MapConfiguration, MapContext
 from mapgen.data.map_configuration_loader import MapConfigurationLoader
 from mapgen.data.layer_configuration_loader import LayerConfigurationLoader
 

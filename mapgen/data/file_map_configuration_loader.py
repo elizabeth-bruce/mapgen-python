@@ -1,8 +1,6 @@
 import json
 import os
 
-from typing import Any, Dict
-
 from mapgen.data.models import LayerConfiguration, MapConfiguration, MapContext
 
 from mapgen.data.map_configuration_loader import MapConfigurationLoader

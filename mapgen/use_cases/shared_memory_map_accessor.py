@@ -1,11 +1,10 @@
-from numpy import frombuffer
-
 from typing import Any, Dict, Union
 
 from multiprocessing.sharedctypes import Array, SynchronizedArray
 from ctypes import c_int, c_float, c_char_p
+from numpy.ctypeslib import as_array
 
-from mapgen.models import MapAccessor, MapCoordinate, MapDefinition
+from mapgen.models import MapAccessor, MapCoordinate, MapMetadata
 from mapgen.use_cases.exceptions import InvalidMapCoordinateException
 
 ALLOWED_CTYPE = Union[c_int, c_float, c_char_p]
@@ -14,15 +13,15 @@ LAYER_TYPE_TO_CTYPE_MAP = {"int": c_int, "float": c_float, "str": c_char_p}
 
 
 class SharedMemoryMapAccessor(MapAccessor):
-    def __init__(self, map_definition: MapDefinition):
-        self.width = map_definition.width
-        self.height = map_definition.height
+    def __init__(self, map_metadata: MapMetadata):
+        self.width = map_metadata.width
+        self.height = map_metadata.height
 
         layer_size = self.width * self.height
 
         self.layer_map_coordinates: Dict[str, SynchronizedArray[ALLOWED_CTYPE]] = {}
 
-        for layer in map_definition.layers:
+        for layer in map_metadata.layers:
             layer_ctype = LAYER_TYPE_TO_CTYPE_MAP[layer.type]
 
             self.layer_map_coordinates[layer.name] = Array(
@@ -36,12 +35,12 @@ class SharedMemoryMapAccessor(MapAccessor):
 
         if not layer_map_array:
             raise InvalidMapCoordinateException(
-                f"Layer name {layer_name} does not exist in map definition"
+                f"Layer name {layer_name} does not exist in map metadata"
             )
 
         if y < 0 or y >= self.height or x < 0 or x >= self.width:
             raise InvalidMapCoordinateException(
-                f"Layer coordinate ({x}, {y}) out of bounds of map definition"
+                f"Layer coordinate ({x}, {y}) out of bounds of map metadata"
             )
 
         idx = (y * self.width) + x
@@ -55,12 +54,12 @@ class SharedMemoryMapAccessor(MapAccessor):
 
         if not layer_map_array:
             raise InvalidMapCoordinateException(
-                f"Layer name {layer_name} does not exist in map definition"
+                f"Layer name {layer_name} does not exist in map metadata"
             )
 
         if y < 0 or y >= self.height or x < 0 or x >= self.width:
             raise InvalidMapCoordinateException(
-                f"Layer coordinate ({x}, {y}) out of bounds of map definition"
+                f"Layer coordinate ({x}, {y}) out of bounds of map metadata"
             )
 
         idx = (y * self.width) + x
@@ -71,4 +70,4 @@ class SharedMemoryMapAccessor(MapAccessor):
         return self.layer_map_coordinates[layer_name]
 
     def get_raw_values(self, layer_name: str):
-        return frombuffer(self.layer_map_coordinates[layer_name])
+        return as_array(self.layer_map_coordinates[layer_name], shape=(self.height, self.width))

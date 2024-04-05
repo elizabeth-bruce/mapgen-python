@@ -63,10 +63,12 @@ class MapDefinition:
     height: int
     layers: List[DefinedLayer]
 
+
 @dataclass
 class LayerMetadata:
     name: str
     type: str
+
 
 @dataclass
 class MapMetadata:
@@ -74,6 +76,7 @@ class MapMetadata:
     width: int
     height: int
     layers: List[LayerMetadata]
+
 
 @dataclass
 class Map:
