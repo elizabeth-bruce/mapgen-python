@@ -16,6 +16,7 @@ type LayerFn = Callable[  # type: ignore
     [int, int, TileAttributeAccessor], Any
 ]  # type: ignore
 
+
 @dataclass
 class LayerMetadata:
     name: str
@@ -29,16 +30,15 @@ class MapMetadata:
     height: int
     layers: List[LayerMetadata]
 
+
 @dataclass(kw_only=True)
 class Layer:
     name: str
     type: str
 
     def to_layer_metadata(self) -> LayerMetadata:
-        return LayerMetadata(
-            name=self.name,
-            type=self.type
-        )
+        return LayerMetadata(name=self.name, type=self.type)
+
 
 @dataclass(kw_only=True)
 class UserDefinedFnLayer(Layer):
@@ -85,11 +85,9 @@ class MapDefinition:
             name=self.name,
             width=self.width,
             height=self.height,
-            layers = [
-                layer.to_layer_metadata()
-                for layer in self.layers
-            ]
+            layers=[layer.to_layer_metadata() for layer in self.layers],
         )
+
 
 @dataclass
 class Map:

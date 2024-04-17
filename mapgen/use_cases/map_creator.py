@@ -1,6 +1,6 @@
 from numpy.random import RandomState
 
-from mapgen.models import Layer, LayerMetadata, Map, MapDefinition, MapMetadata
+from mapgen.models import Map, MapDefinition
 
 from mapgen.use_cases.shared_memory_map_accessor import SharedMemoryMapAccessor
 from mapgen.use_cases.map_creator_tasks.user_defined_fn_map_creator_task import (
