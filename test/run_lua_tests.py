@@ -13,7 +13,7 @@ luaunit = require('test.resources.luaunit.luaunit')
 LUA_RUN_TESTS = """
 local runner = luaunit.LuaUnit.new()
 runner:setOutputType("text")
-os.exit(runner:runSuite())
+os.exit(runner:runSuite('-v'))
 """
 
 lua = lupa.LuaRuntime(register_eval=False, unpack_returned_tuples=False)
