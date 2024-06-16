@@ -20,5 +20,22 @@ class MapConfiguration:
 
 
 @dataclass
+class ViewConfiguration:
+    name: str
+    type: str
+    context: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class ViewConfigurationSet:
+    view_configurations: List[ViewConfiguration]
+
+
+@dataclass
 class MapContext:
+    file_path: str
+
+
+@dataclass
+class ViewSetContext:
     file_path: str

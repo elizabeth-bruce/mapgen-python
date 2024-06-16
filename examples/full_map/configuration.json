@@ -6,7 +6,7 @@
         "name": "height",
         "generator": "FREQUENCY_FILTERED_NOISE",
         "context": {
-            "roughness": 0.15,
+            "roughness": 2,
             "decay_x": 2.5,
             "decay_y": 2.5,
             "decay_x_y": 0.5

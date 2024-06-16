@@ -1,0 +1,9 @@
+{
+    "views": [{
+        "name": "temperature",
+	"type": "CONSOLE",
+	"context": {
+            "filename": "view_temperature.lua"
+	}
+    }]
+}

@@ -61,11 +61,11 @@ type MapCoordinateSet = Dict[MapCoordinate, Any]  # type: ignore
 
 class MapAccessor(ABC):
     @abstractmethod
-    def __getitem__(self, key):
+    def __getitem__(self, key: MapCoordinate) -> Any:
         pass
 
     @abstractmethod
-    def __setitem__(self, key, val):
+    def __setitem__(self, key: MapCoordinate, val: Any) -> None:
         pass
 
     @abstractmethod

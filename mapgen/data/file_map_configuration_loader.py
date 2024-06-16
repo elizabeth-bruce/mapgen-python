@@ -13,14 +13,14 @@ class FileMapConfigurationLoader(MapConfigurationLoader):
     def load_map_configuration(self) -> MapConfiguration:
         try:
             with open(self.filename, "r") as config_file:
-                config_json = json.load(config_file)
+                config_dict = json.load(config_file)
                 layer_configurations = [
                     LayerConfiguration(**layer_configuration)
-                    for layer_configuration in config_json["layer_configurations"]
+                    for layer_configuration in config_dict["layer_configurations"]
                 ]
 
-                config_json["layer_configurations"] = layer_configurations
-                map_configuration = MapConfiguration(**config_json)
+                config_dict["layer_configurations"] = layer_configurations
+                map_configuration = MapConfiguration(**config_dict)
 
                 return map_configuration
         except Exception as err:
