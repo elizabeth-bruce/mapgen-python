@@ -1,14 +1,14 @@
 {
     "name": "full_map",
-    "width": 100,
-    "height": 100,
+    "width": 270,
+    "height": 60,
     "layer_configurations": [{
         "name": "height",
         "generator": "FREQUENCY_FILTERED_NOISE",
         "context": {
-            "roughness": 2,
-            "decay_x": 2.5,
-            "decay_y": 2.5,
+            "roughness": 20,
+            "decay_x": 3.0,
+            "decay_y": 3.0,
             "decay_x_y": 0.5
 	}
     },
@@ -19,5 +19,38 @@
             "type": "float",
             "filename": "temperature.lua"
         }
+    },
+    {
+        "name": "latitude",
+	"generator": "LUA",
+	"context": {
+	    "type": "float",
+	    "filename": "latitude.lua"
+	}
+    },
+    {
+        "name": "precipitation",
+	"generator": "LUA",
+	"context": {
+	    "type": "float",
+	    "filename": "precipitation.lua"
+	}
+    },
+    {
+        "name": "precipitation_available",
+	"generator": "LUA",
+	"context": {
+	    "type": "float",
+	    "filename": "precipitation.lua"
+        }
+    },
+    {
+        "name": "precipitation_transfer",
+	"generator": "LUA",
+	"context": {
+	    "type": "float",
+	    "filename": "precipitation.lua"
+        }
     }]
+
 }

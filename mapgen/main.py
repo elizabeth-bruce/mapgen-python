@@ -33,16 +33,12 @@ view_configuration_set_loader = FileViewConfigurationSetLoader(VIEW_PATH)
 
 if __name__ == "__main__":
     map_creator = MapCreator()
-    new_map = map_creator.create_map(map_definition, 1)
+    new_map = map_creator.create_map(map_definition, 914)
 
     view_configuration_set = view_configuration_set_loader.load()
     view_set_context = view_configuration_set_loader.load_view_set_context()
 
     console_map_viewer = ConsoleMapViewer(view_configuration_set, view_set_context)
 
-    render_str = console_map_viewer.render(new_map, "temperature")
+    render_str = console_map_viewer.render(new_map, "height")
     print(render_str)
-
-    import pdb
-
-    pdb.set_trace()

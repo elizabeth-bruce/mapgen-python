@@ -3,7 +3,21 @@
         "name": "temperature",
 	"type": "CONSOLE",
 	"context": {
-            "filename": "view_temperature.lua"
+            "filename": "views.lua"
 	}
+    },
+    {
+        "name": "precipitation",
+	"type": "CONSOLE",
+	"context": {
+	    "filename": "views.lua"
+	}
+    },
+    {
+        "name": "height",
+	"type": "CONSOLE",
+	"context": {
+            "filename": "views.lua"
+        }
     }]
 }
