@@ -11,6 +11,7 @@ gnureadline = "^8.1.2"
 async-lru = "^2.0.4"
 numpy = "^1.26.4"
 lupa = "^2.0"
+click ="^8.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.2.0"
@@ -25,4 +26,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-test = 'pytest test/'
+mapgen = "app.app:cli"
