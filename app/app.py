@@ -45,7 +45,7 @@ def create(config_file, out_file, seed):
 @cli.command()
 @click.option('--map_file', default='map.npz', help='Location to read the map from.')
 @click.option('--view_file', default='views.json', help='View configuration file to load map views from.')
-@click.option('--view', help='View to use when rendering the map.')
+@click.argument('view')
 def view(map_file, view_file, view):
     root_dir = os.path.abspath(os.curdir)
 

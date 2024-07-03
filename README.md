@@ -14,7 +14,7 @@ cd examples/full_map
 # Creates the map specified in the directory and saves to map.npz
 poetry run mapgen create
 # Loads the map from map.npz and renders the height property in-console
-poetry run mapgen view --view height
+poetry run mapgen view height
 ```
 
 ### Creating a Map
@@ -166,5 +166,5 @@ These view functions are then made accessible via a _view configuration file_, a
 Once this file is set, the map can now be displayed in console via the `mapgen view command`:
 
 ```sh
-poetry run mapgen view --view example_view
+poetry run mapgen view example_view
 ```
