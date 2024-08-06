@@ -5,8 +5,6 @@
     "layer_configurations": [{
         "name": "bottom_layer",
 	"generator": "test_generator",
-	"context": {
-	    "type": "int"
-	}
+	"context": {}
     }]
 }

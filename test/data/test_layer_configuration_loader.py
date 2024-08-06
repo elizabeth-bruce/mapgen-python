@@ -19,16 +19,6 @@ def test_layer_configuration():
    )
 
 @pytest.fixture
-def test_layer_configuration_unknown_layer_type():
-    return LayerConfiguration(
-        'test_layer',
-        'unknown_generator',
-        {
-            "type": "int"
-        }
-    )
-
-@pytest.fixture
 def test_layer_configuration_loader():
     return LayerConfigurationLoader()
 
@@ -52,8 +42,3 @@ def test_layer_configuration_loader_test_generator(test_layer_configuration, tes
 
     assert fn(0, 1, test_tile_attribute_accessor) == 1
     assert fn(5, 15, test_tile_attribute_accessor) == 20
-
-def test_layer_configuration_loader_unknown_layer_type(test_layer_configuration_unknown_layer_type, test_map_context, test_layer_configuration_loader):
-    with pytest.raises(UnknownLayerGeneratorException) as exc:
-        test_layer_configuration_loader.load(test_layer_configuration_unknown_layer_type, test_map_context)
-

@@ -9,7 +9,7 @@ from mapgen.data.layer_generators.frequency_filtered_noise_layer_generator impor
 def test_layer_configuration():
     return LayerConfiguration(
         'frequency_layer',
-        'FREQUENCY_FILTERED_NOISE_GENERATOR',
+        'FREQUENCY_FILTERED_NOISE',
         {
             "roughness": 0.15,
             "decay_x": 2.5,
