@@ -1,0 +1,23 @@
+{
+    "name": "example_map",
+    "width": 10,
+    "height": 10,
+    "layer_configurations": [{
+        "name": "base",
+        "generator": "FREQUENCY_FILTERED_NOISE",
+	"context": {
+            "toughness": 0.15,
+	    "decay_x": 2.5,
+	    "decay_y": 2.5,
+	    "decay_x_y": 0.5
+        }
+    },
+    {
+        "name": "dependent",
+        "generator": "native_generator",
+	"context": {
+	    "type": "float",
+            "filename": "dependent.py"
+        }
+    }]
+}

@@ -23,5 +23,5 @@ def test_validate_layer_configuration_bad_context():
             'FREQUENCY_FILTERED_NOISE',
             {
                'foo': 'bar'
-            } 
+            }
         )
