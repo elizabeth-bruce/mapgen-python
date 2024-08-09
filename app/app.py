@@ -76,4 +76,3 @@ def view(map_file: str, view_file: str, view: str) -> None:
     render_str = console_map_viewer.render(new_map, view)
 
     click.echo(render_str)
-
