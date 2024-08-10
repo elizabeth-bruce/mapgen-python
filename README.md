@@ -1,5 +1,6 @@
 ## mapgen
 ------
+![example output of map rendered to console](./example_map_output.png)
 mapgen is a tile-based, 2D map generation tool to procedurally generate maps for  fantasy worldbuilding, tabletop campaign settings, and other similar cases. It aims to be both highly customizable for the user and easy-to-use - to do this, the user writes Lua code to detail individual properties of the world, which mapgen then uses to create a map that satisfies these properies.
 
 Once created, maps can be either exported to a NumPy file, or viewed in-console using user-defined views, again written in Lua, that specify how to display the map.
