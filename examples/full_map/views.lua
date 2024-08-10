@@ -68,19 +68,19 @@ function biotype(x, y)
 	if precipitation >= 2000 then
             return '\x1b[38;2;0;255;0m∩\x1b[0m'
 	end
-	if precipitation < 500 then
+	if precipitation < 500 then -- Desert Hills
             return '\x1b[38;2;225;190;45m∩\x1b[0m'
 	end
-	return '\x1b[38;2;195;205;100m∩\x1b[0m'
+	return '\x1b[38;2;195;205;100m∩\x1b[0m' -- Steppe Hills
     end
 
-    if precipitation < 500 then
+    if precipitation < 500 then -- Desert
         return '\x1b[38;2;225;190;45m.\x1b[0m'
     end
 
-    if precipitation < 2000 then
+    if precipitation < 2000 then -- Steppe
         return '\x1b[38;2;195;205;100m.\x1b[0m'
-    end 
+    end
     -- Plains
     return '\x1b[38;2;0;255;0m.\x1b[0m'
 end
