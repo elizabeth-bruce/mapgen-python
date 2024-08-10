@@ -19,5 +19,12 @@
 	"context": {
             "filename": "views.lua"
         }
+    },
+    {
+	"name": "biotype",
+	"type": "CONSOLE",
+	"context": {
+	    "filename": "views.lua"
+        }
     }]
 }

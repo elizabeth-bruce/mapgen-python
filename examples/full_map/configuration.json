@@ -6,10 +6,10 @@
         "name": "height",
         "generator": "FREQUENCY_FILTERED_NOISE",
         "context": {
-            "roughness": 20,
-            "decay_x": 3.0,
-            "decay_y": 3.0,
-            "decay_x_y": 0.5
+            "roughness": 10,
+            "decay_x": 2.5,
+            "decay_y": 2.5,
+            "decay_x_y": 0.6
 	}
     },
     {
